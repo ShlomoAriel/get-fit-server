@@ -12,9 +12,10 @@ var traineeSchema = new Schema({
     phone: { type: String, required: true, unique: true },
     medicalStatus: { type: String, required: true, unique: true },
     medicine: { type: String, required: true, unique: true },
-    trainingPackages: [{type: Schema.Types.ObjectId, ref: 'TrainingPackage'}]
-    goals: [{type: Schema.Types.ObjectId, ref: 'Goal'}]
-    trainingSessions: [{type: Schema.Types.ObjectId, ref: 'TrainingSession'}]
+    trainingPackageList: [{type: Schema.Types.ObjectId, ref: 'TrainingPackage'}]
+    trainingStatusList: [{type: Schema.Types.ObjectId, ref: 'TrainingStatus'}]
+    goalList: [{type: Schema.Types.ObjectId, ref: 'Goal'}]
+    trainingSessionList: [{type: Schema.Types.ObjectId, ref: 'TrainingSession'}]
 });
 var Trainee = mongoose.model('Trainee', traineeSchema);
 module.exports = Trainee;
