@@ -15,7 +15,7 @@ var traineeSchema = new Schema({
     trainingStatusList: [{type: Schema.Types.ObjectId, ref: 'TrainingStatus'}],
     goalList: [{type: Schema.Types.ObjectId, ref: 'Goal'}],
     trainingSessionList: [{type: Schema.Types.ObjectId, ref: 'TrainingSession'}],
-    trainerRecommendationList: [{type: Schema.Types.ObjectId, ref: 'TrainerRecommendation'}]
+    trainerRecommendationList: [{type: Schema.Types.ObjectId, ref: 'TrainerRecommendation'}],
     user: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 var Trainee = mongoose.model('Trainee', traineeSchema);
