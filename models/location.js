@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var roleSchema = new Schema({
+var locationSchema = new Schema({
     name: { type: String, required: true, unique: true }
 });
-var Role = mongoose.model('Role', roleSchema);
-module.exports = Role;
+var Location = mongoose.model('Location', locationSchema);
+module.exports = Location;
