@@ -21,9 +21,10 @@ router.get('/api/getExercises', passport.authenticate('jwt', { session: false })
 router.post('/api/addExercise', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding exercise');
     var exercise = new ExerciseModel(req.body);
+    console.log('exercise: ' + exercise.sets);
     exercise.save((err, newItem) => {
         if (err) {
-            return next(err.code);
+            return next('err saving ' + err.code);
         }
         res.status(200).send('OK');
     });
