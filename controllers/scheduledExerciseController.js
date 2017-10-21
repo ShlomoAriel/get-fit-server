@@ -8,7 +8,7 @@ app.use(passport.initialize());
 require('../config/passport')(passport);
 
 router.get('/api/getScheduledExercises', passport.authenticate('jwt', { session: false }), function (req, res) {
-    ScheduledExerciseModel.find().populate('type').exec(function (err, scheduledExercises) {
+    ScheduledExerciseModel.find().populate('exercise').populate('trainee').exec(function (err, scheduledExercises) {
         if (err) {
             res.send('find no good' + err);
         }
