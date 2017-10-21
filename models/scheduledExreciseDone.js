@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var scheduledExreciseDoneSchema = new Schema({
-    scheduledExrecise:{ type: Schema.ObjectId, ref: 'ScheduledExrecise', required: true },
+var scheduledExerciseDoneSchema = new Schema({
+    scheduledExercise:{ type: Schema.ObjectId, ref: 'ScheduledExrecise', required: true },
     date: { type: Date, required: true}
 
 });
-var ScheduledExreciseDone = mongoose.model('ScheduledExreciseDone', scheduledExreciseDoneSchema);
+var ScheduledExreciseDone = mongoose.model('ScheduledExreciseDone', scheduledExerciseDoneSchema);
 module.exports = ScheduledExreciseDone;
