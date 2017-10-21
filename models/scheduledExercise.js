@@ -9,5 +9,5 @@ var scheduledExerciseSchema = new Schema({
     trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: false },
     exercise:{ type: Schema.ObjectId, ref: 'Exercise', required: true },
 });
-var ScheduledExrecise = mongoose.model('ScheduledExrecise', scheduledExerciseSchema);
-module.exports = ScheduledExrecise;
+var ScheduledExercise = mongoose.model('ScheduledExercise', scheduledExerciseSchema);
+module.exports = ScheduledExercise;
