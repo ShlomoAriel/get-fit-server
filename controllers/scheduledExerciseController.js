@@ -1,14 +1,14 @@
 var express = require('express')
   , router = express.Router()
   , passport = require('passport')
-  , ScheduledExreciseModel = require('../models/scheduledExercise')
+  , ScheduledExerciseModel = require('../models/scheduledExercise')
   , app = express()
 
 app.use(passport.initialize());
 require('../config/passport')(passport);
 
-router.get('/api/getScheduledExrecises', passport.authenticate('jwt', { session: false }), function (req, res) {
-    ScheduledExreciseModel.find().populate('type').exec(function (err, scheduledExercises) {
+router.get('/api/getScheduledExercises', passport.authenticate('jwt', { session: false }), function (req, res) {
+    ScheduledExerciseModel.find().populate('type').exec(function (err, scheduledExercises) {
         if (err) {
             res.send('find no good' + err);
         }
@@ -18,9 +18,9 @@ router.get('/api/getScheduledExrecises', passport.authenticate('jwt', { session:
     })
 });
 //-------------------------------------------------------------------------------------------------
-router.post('/api/addScheduledExrecise', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+router.post('/api/addScheduledExercise', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding scheduledExercise');
-    var scheduledExercise = new ScheduledExreciseModel(req.body);
+    var scheduledExercise = new ScheduledExerciseModel(req.body);
     scheduledExercise.save((err, newItem) => {
         if (err) {
             return next(err.code);
@@ -29,15 +29,15 @@ router.post('/api/addScheduledExrecise', passport.authenticate('jwt', { session:
     });
 });
 //----------------------------------------------------------------------------------------------------
-router.put('/api/updateScheduledExrecise/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    console.log('updating ScheduledExrecise: ' + req.body.name + ' ' + req.body.value);
-    ScheduledExreciseModel.findOneAndUpdate(
+router.put('/api/updateScheduledExercise/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
+    console.log('updating ScheduledExercise: ' + req.body.name + ' ' + req.body.value);
+    ScheduledExerciseModel.findOneAndUpdate(
         { _id: req.params.id },
         { $set: { name: req.body.name } },
         { upsert: true },
-        function (err, newScheduledExrecise) {
+        function (err, newScheduledExercise) {
             if (err) {
-                res.send('Error updating ScheduledExrecise\n' + err);
+                res.send('Error updating ScheduledExercise\n' + err);
             }
             else {
                 res.send(204);
@@ -45,12 +45,12 @@ router.put('/api/updateScheduledExrecise/:id', passport.authenticate('jwt', { se
         });
 });
 //----------------------------------------------------------------------------------------------------
-router.delete('/api/deleteScheduledExrecise/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    ScheduledExreciseModel.findOneAndRemove(
+router.delete('/api/deleteScheduledExercise/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
+    ScheduledExerciseModel.findOneAndRemove(
         { _id: req.params.id },
-        function (err, newScheduledExrecise) {
+        function (err, newScheduledExercise) {
             if (err) {
-                res.send('Error deleting ScheduledExrecise\n' + err);
+                res.send('Error deleting ScheduledExercise\n' + err);
             }
             else {
                 res.send(204);
