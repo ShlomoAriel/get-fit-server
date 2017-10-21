@@ -23,6 +23,7 @@ router.post('/api/addScheduledExercise', passport.authenticate('jwt', { session:
     var scheduledExercise = new ScheduledExerciseModel(req.body);
     scheduledExercise.save((err, newItem) => {
         if (err) {
+            console.log('scheduledExercise saving error ' + err);
             return next(err.code);
         }
         res.status(200).send('OK');
