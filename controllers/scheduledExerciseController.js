@@ -7,6 +7,21 @@ var express = require('express')
 app.use(passport.initialize());
 require('../config/passport')(passport);
 
+router.get('/api/getTraineeScheduledExercisesByDay', passport.authenticate('jwt', { session: false }), function (req, res) {
+    ScheduledExerciseModel.find({
+            trainee: req.param('trainee'),
+            weekDay: req.param('weekDay')
+        })
+    .populate('exercise').populate('trainee').exec(function (err, scheduledExercises) {
+        if (err) {
+            res.send('find no good' + err);
+        }
+        else {
+            res.json(scheduledExercises);
+        }
+    })
+});
+//-------------------------------------------------------------------------------------------------
 router.get('/api/getScheduledExercises', passport.authenticate('jwt', { session: false }), function (req, res) {
     ScheduledExerciseModel.find().populate('exercise').populate('trainee').exec(function (err, scheduledExercises) {
         if (err) {
