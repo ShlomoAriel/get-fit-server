@@ -10,10 +10,8 @@ require('../config/passport')(passport);
 router.get('/api/getTraineeScheduledExercises', passport.authenticate('jwt', { session: false }), function (req, res) {
     ScheduledExerciseModel.find({
             trainee: req.param('trainee')
-        },
-        { 
-            sort:{order: -1}
         })
+    .sort('order')
     .populate('exercise').populate('trainee').exec(function (err, scheduledExercises) {
         if (err) {
             res.send('find no good' + err);
@@ -28,10 +26,8 @@ router.get('/api/getTraineeScheduledExercisesByDay', passport.authenticate('jwt'
     ScheduledExerciseModel.find({
             trainee: req.param('trainee'),
             weekDay: req.param('weekDay')
-        },
-        { 
-            sort:{order: -1}
         })
+    .sort('order')
     .populate('exercise').populate('trainee').exec(function (err, scheduledExercises) {
         if (err) {
             res.send('find no good' + err);
