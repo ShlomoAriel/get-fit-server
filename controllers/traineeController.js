@@ -56,7 +56,7 @@ router.post('/api/addTrainingPackageToTrainee/', passport.authenticate('jwt', { 
 //----------------------------------------------------------------------------------------------------
 router.get('/api/getTraineePackages/:id', (req, res) => {
     TraineeModel.findOne(
-        { _id: req.params.traineeId }).populate('trainingPackageList')
+        { _id: req.params.id }).populate('trainingPackageList')
         .exec(function (err, trainee) {
             if (err) {
                 res.send('Error updating Resource\n' + err);
