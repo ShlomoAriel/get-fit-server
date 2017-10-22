@@ -37,12 +37,12 @@ router.post('/api/addTrainingPackageToTrainee/', passport.authenticate('jwt', { 
             }
             else {
                 let newTrainingPackageId = req.param('trainingPackageId');
-                let isInArray = trainee.trainingPackage_ids.some(function (trainingPackage) {
+                let isInArray = trainee.trainingPackageList.some(function (trainingPackage) {
                     return trainingPackage.equals(newTrainingPackageId);
                 });
                 console.log('isInArray: ' + isInArray);
                 if (isInArray === false) {
-                    trainee.trainingPackage_ids.push(req.param('trainingPackageId'));
+                    trainee.trainingPackageList.push(req.param('trainingPackageId'));
                     trainee.save((err, newItem) => {
                         if (err) {
                             return next(err);
