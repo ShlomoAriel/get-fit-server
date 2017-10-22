@@ -54,7 +54,7 @@ router.post('/api/addTrainingPackageToTrainee/', passport.authenticate('jwt', { 
         });
 });
 //----------------------------------------------------------------------------------------------------
-aprouterp.get('/api/getTraineePackages/:id', (req, res) => {
+router.get('/api/getTraineePackages/:id', (req, res) => {
     TraineeModel.findOne(
         { _id: req.params.traineeId }).populate('trainingPackageList')
         .exec(function (err, trainee) {
