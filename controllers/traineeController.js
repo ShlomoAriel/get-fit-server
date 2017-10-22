@@ -54,6 +54,19 @@ router.post('/api/addTrainingPackageToTrainee/', passport.authenticate('jwt', { 
         });
 });
 //----------------------------------------------------------------------------------------------------
+aprouterp.get('/api/getTraineePackages/:id', (req, res) => {
+    TraineeModel.findOne(
+        { _id: req.params.traineeId }).populate('trainingPackageList')
+        .exec(function (err, trainee) {
+            if (err) {
+                res.send('Error updating Resource\n' + err);
+            }
+            else {
+                res.send(trainee.trainingPackageList);
+            }
+        });
+})
+//----------------------------------------------------------------------------------------------------
 router.put('/api/updateTrainee/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
     console.log('updating Trainee: ' + req.body.name + ' ' + req.body.value);
     TraineeModel.findOneAndUpdate(
