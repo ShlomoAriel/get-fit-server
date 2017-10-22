@@ -29,7 +29,7 @@ router.post('/api/addTrainee', passport.authenticate('jwt', { session: false }),
     });
 });
 //-------------------------------------------------------------------------------------------------
-app.post('/api/addTrainingPackageToTrainee/', passport.authenticate('jwt', { session: false }), function (req, res, next) {
+router.post('/api/addTrainingPackageToTrainee/', passport.authenticate('jwt', { session: false }), function (req, res, next) {
     TraineeModel.findOne({ _id: req.param('traineeId') })
         .exec(function (err, trainee) {
             if (err) {
