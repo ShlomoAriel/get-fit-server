@@ -11,7 +11,7 @@ var traineeSchema = new Schema({
     phone: { type: String, required: false, unique: false },
     medicalStatus: { type: String, required: false, unique: false },
     medicine: { type: String, required: false, unique: false },
-    trainingPackageList: [{type: Schema.Types.ObjectId, ref: 'TrainingPackage'}],
+    trainingPackageList: [{type: Schema.Types.ObjectId, ref: 'TraineeTrainingPackage'}],
     trainingStatusList: [{type: Schema.Types.ObjectId, ref: 'TrainingStatus'}],
     goalList: [{type: Schema.Types.ObjectId, ref: 'Goal'}],
     trainingSessionList: [{type: Schema.Types.ObjectId, ref: 'TrainingSession'}],
