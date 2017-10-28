@@ -11,7 +11,7 @@ require('../config/passport')(passport);
 //----------------------------------------------------------------------------------------------------
 router.get('/api/getTraineeTrainingPackageByTrainee/:id', (req, res) => {
     TraineeTrainingPackageModel.find(
-        { _id: req.params.id })
+        { trainee: req.params.id })
         .exec(function (err, packageList) {
             if (err) {
                 res.send('Error updating Resource\n' + err);
