@@ -8,7 +8,10 @@ app.use(passport.initialize());
 require('../config/passport')(passport);
 
 router.get('/api/getTraineeTrainingPackages', passport.authenticate('jwt', { session: false }), function (req, res) {
-    TraineeTrainingPackageModel.find().populate('type').exec(function (err, traineeTrainingPackages) {
+    TraineeTrainingPackageModel
+    .find({trainee: req.param('traineeId')})
+    .populate('type')
+    .exec(function (err, traineeTrainingPackages) {
         if (err) {
             res.send('find no good' + err);
         }

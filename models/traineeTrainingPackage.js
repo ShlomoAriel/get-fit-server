@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var traineeTrainingPackageSchema = new Schema({
     trainingPackage:{ type: Schema.ObjectId, ref: 'TrainingPackage', required: true },
+    trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true },
     date: { type: Date, required: true},
     quantity: { type: Number, required: true}
 });
