@@ -6,6 +6,7 @@ router.use('/', require('./roleController'))
 router.use('/', require('./exerciseController'))
 router.use('/', require('./traineeController'))
 router.use('/', require('./trainingPackageController'))
+router.use('/', require('./traineeTrainingPackageController'))
 router.use('/', require('./scheduledExerciseController'))
 
 module.exports = router
