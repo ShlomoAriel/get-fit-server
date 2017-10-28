@@ -8,7 +8,7 @@ app.use(passport.initialize());
 require('../config/passport')(passport);
 
 router.get('/api/getTrainee/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    TraineeModel.find({req.params.id}).exec(function (err, trainee) {
+    TraineeModel.find({_id:req.params.id}).exec(function (err, trainee) {
         if (err) {
             res.send('find no good' + err);
         }
