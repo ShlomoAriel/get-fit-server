@@ -8,5 +8,6 @@ router.use('/', require('./traineeController'))
 router.use('/', require('./trainingPackageController'))
 router.use('/', require('./traineeTrainingPackageController'))
 router.use('/', require('./scheduledExerciseController'))
+router.use('/', require('./goalController'))
 
 module.exports = router
