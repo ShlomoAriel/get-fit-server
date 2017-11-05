@@ -7,13 +7,29 @@ var express = require('express')
 app.use(passport.initialize());
 require('../config/passport')(passport);
 
+
+//----------------------------------------------------------------------------------------------------
+router.get('/api/getTraineeStatusByTrainee/:id', (req, res) => {
+    TraineeStatusModel.find(
+        { trainee: req.params.id })
+        .populate('trainingPackage').populate('trainee')
+        .exec(function (err, packageList) {
+            if (err) {
+                res.send('Error updating Resource\n' + err);
+            }
+            else {
+                res.send(packageList);
+            }
+        });
+})
+//-------------------------------------------------------------------------------------------------
 router.get('/api/getTraineeStatuss', passport.authenticate('jwt', { session: false }), function (req, res) {
-    TraineeStatusModel.find().populate('type').exec(function (err, traineeStatuss) {
+    TraineeStatusModel.find().exec(function (err, TraineeStatuss) {
         if (err) {
             res.send('find no good' + err);
         }
         else {
-            res.json(traineeStatuss);
+            res.json(TraineeStatuss);
         }
     })
 });
