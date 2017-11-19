@@ -5,7 +5,7 @@ var dietCommentSchema = new Schema({
     name: { type: String, required: true, unique: true },
     date: { type: Date, required: true}
     user:{ type: Schema.ObjectId, ref: 'User', required: true },
-    dietMenu:{ type: Schema.ObjectId, ref: 'DietMenu', required: true },
+    diet:{ type: Schema.ObjectId, ref: 'Diet', required: true },
 
 });
 var DietComment = mongoose.model('DietComment', dietCommentSchema);

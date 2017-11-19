@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var dietSchema = new Schema({
-    name: { type: String, required: true, unique: true },
+    text: { type: String, required: true, unique: false },
     trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true },
+    date: { type: Date, required: true}
 
 });
 var Diet = mongoose.model('Diet', dietSchema);
