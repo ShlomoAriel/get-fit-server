@@ -6,5 +6,5 @@ var dietSchema = new Schema({
     trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true },
 
 });
-var DietMenu = mongoose.model('DietMenu', dietSchema);
-module.exports = DietMenu;
+var Diet = mongoose.model('Diet', dietSchema);
+module.exports = Diet;
