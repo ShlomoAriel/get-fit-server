@@ -1,7 +1,7 @@
 var express = require('express')
   , router = express.Router()
   , passport = require('passport')
-  , GoalModel = require('../models/diet')
+  , DietModel = require('../models/diet')
   , app = express()
 
 app.use(passport.initialize());
@@ -9,8 +9,8 @@ require('../config/passport')(passport);
 
 
 //----------------------------------------------------------------------------------------------------
-router.get('/api/getGoalByTrainee/:id', (req, res) => {
-    GoalModel.find(
+router.get('/api/getDietByTrainee/:id', (req, res) => {
+    DietModel.find(
         { trainee: req.params.id })
         .populate('trainingPackage').populate('trainee')
         .exec(function (err, packageList) {
@@ -23,20 +23,20 @@ router.get('/api/getGoalByTrainee/:id', (req, res) => {
         });
 })
 //-------------------------------------------------------------------------------------------------
-router.get('/api/getGoals', passport.authenticate('jwt', { session: false }), function (req, res) {
-    GoalModel.find().exec(function (err, Goals) {
+router.get('/api/getDiets', passport.authenticate('jwt', { session: false }), function (req, res) {
+    DietModel.find().exec(function (err, Diets) {
         if (err) {
             res.send('find no good' + err);
         }
         else {
-            res.json(Goals);
+            res.json(Diets);
         }
     })
 });
 //-------------------------------------------------------------------------------------------------
-router.post('/api/addGoal', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+router.post('/api/addDiet', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding diet');
-    var diet = new GoalModel(req.body);
+    var diet = new DietModel(req.body);
     diet.save((err, newItem) => {
         if (err) {
             return next(err.code);
@@ -45,15 +45,15 @@ router.post('/api/addGoal', passport.authenticate('jwt', { session: false }), (r
     });
 });
 //----------------------------------------------------------------------------------------------------
-router.put('/api/updateGoal/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    console.log('updating Goal: ' + req.body.name + ' ' + req.body.value);
-    GoalModel.findOneAndUpdate(
+router.put('/api/updateDiet/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
+    console.log('updating Diet: ' + req.body.name + ' ' + req.body.value);
+    DietModel.findOneAndUpdate(
         { _id: req.params.id },
         { $set: { name: req.body.name } },
         { upsert: true },
-        function (err, newGoal) {
+        function (err, newDiet) {
             if (err) {
-                res.send('Error updating Goal\n' + err);
+                res.send('Error updating Diet\n' + err);
             }
             else {
                 res.send(204);
@@ -61,12 +61,12 @@ router.put('/api/updateGoal/:id', passport.authenticate('jwt', { session: false 
         });
 });
 //----------------------------------------------------------------------------------------------------
-router.delete('/api/deleteGoal/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    GoalModel.findOneAndRemove(
+router.delete('/api/deleteDiet/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
+    DietModel.findOneAndRemove(
         { _id: req.params.id },
-        function (err, newGoal) {
+        function (err, newDiet) {
             if (err) {
-                res.send('Error deleting Goal\n' + err);
+                res.send('Error deleting Diet\n' + err);
             }
             else {
                 res.send(204);
