@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var dietSchema = new Schema({
     text: { type: String, required: true, unique: false },
-    trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true },
+    trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true  unique: false},
     date: { type: Date, required: true}
 
 });
