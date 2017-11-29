@@ -8,7 +8,7 @@ var traineeStatusSchema = new Schema({
     chestCirc: { type: Number, required: false, unique: false },
     legCirc: { type: Number, required: false, unique: false },
     assCirc: { type: Number, required: false, unique: false },
-    soulderCirc: { type: Number, required: false, unique: false },
+    shoulderCirc: { type: Number, required: false, unique: false },
     waistCirc: { type: Number, required: false, unique: false },
     image: { type: String, required: false, unique: false },
     date: { type: Date, required: true},
