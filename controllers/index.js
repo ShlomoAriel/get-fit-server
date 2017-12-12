@@ -14,5 +14,6 @@ router.use('/', require('./paymentController'))
 router.use('/', require('./locationController'))
 router.use('/', require('./trainingSessionController'))
 router.use('/', require('./dietController'))
+router.use('/', require('./sessionController'))
 
 module.exports = router
