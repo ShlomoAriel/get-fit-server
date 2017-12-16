@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var sessionSchema = new Schema({
     text: { type: String},
+    date: { type: Date, required: true},
     start: { type: Date, required: true},
     end: { type: Date, required: true},
     trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true },
