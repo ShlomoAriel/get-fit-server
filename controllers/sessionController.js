@@ -49,7 +49,7 @@ router.put('/api/updateSession/:id', passport.authenticate('jwt', { session: fal
     console.log('updating Session: ' + req.body.name + ' ' + req.body.value);
     SessionModel.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { text: req.body.text, date: req.body.date, achieved: req.body.achieved} },
+        { $set: { text: req.body.text, date: req.body.date, start: req.body.start, end: req.body.end, achieved: req.body.done} },
         { upsert: true },
         function (err, newSession) {
             if (err) {
