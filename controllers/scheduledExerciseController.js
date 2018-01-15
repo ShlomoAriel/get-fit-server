@@ -25,7 +25,23 @@ router.get('/api/getTraineeScheduledExercises', passport.authenticate('jwt', { s
 router.get('/api/getTraineeScheduledExercisesByDay', passport.authenticate('jwt', { session: false }), function (req, res) {
     ScheduledExerciseModel.find({
             trainee: req.param('trainee'),
-            weekDay: req.param('weekDay')
+            sessionName: req.param('sessionName')
+        })
+    .sort('order')
+    .populate('exercise').populate('trainee').exec(function (err, scheduledExercises) {
+        if (err) {
+            res.send('find no good' + err);
+        }
+        else {
+            res.json(scheduledExercises);
+        }
+    })
+});
+//-------------------------------------------------------------------------------------------------
+router.get('/api/getTraineeScheduledExercisesBySessionName', passport.authenticate('jwt', { session: false }), function (req, res) {
+    ScheduledExerciseModel.find({
+            trainee: req.param('trainee'),
+            sessionName: req.param('sessionName')
         })
     .sort('order')
     .populate('exercise').populate('trainee').exec(function (err, scheduledExercises) {
