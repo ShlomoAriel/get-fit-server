@@ -35,8 +35,20 @@ router.get('/api/getHomeSessions', passport.authenticate('jwt', { session: false
 //-------------------------------------------------------------------------------------------------
 router.post('/api/addHomeSession', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding homeSession');
-    var homeSession = new HomeSessionModel(req.body);
+    var homeSession = new   (req.body);
     homeSession.save((err, newItem) => {
+        if (err) {
+            return next(err.code);
+        }
+        res.status(200).send('OK');
+    });
+});
+//-------------------------------------------------------------------------------------------------
+router.post('/api/addHomeSessions', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    console.log('adding homeSessions');
+
+    var homeSessions = new (req.body);
+    HomeSessionModel.insertMany(homeSessions,(err, newItems) => {
         if (err) {
             return next(err.code);
         }
