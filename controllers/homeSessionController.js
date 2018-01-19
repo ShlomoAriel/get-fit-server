@@ -10,6 +10,7 @@ require('../config/passport')(passport);
 router.get('/api/getHomeSessionByTrainee/:id', (req, res) => {
     HomeSessionModel.find(
         { trainee: req.params.id })
+        .populate('sessionName')
         .exec(function (err, sessionList) {
             if (err) {
                 res.send('Error updating Resource\n' + err);
