@@ -44,11 +44,9 @@ router.post('/api/addHomeSession', passport.authenticate('jwt', { session: false
     });
 });
 //-------------------------------------------------------------------------------------------------
-router.post('/api/addHomeSessions', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+router.post('/api/  ', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding homeSessions');
-
-    var homeSessions = new (req.body);
-    HomeSessionModel.insertMany(homeSessions,(err, newItems) => {
+    HomeSessionModel.insertMany(req.body,(err, newItems) => {
         if (err) {
             return next(err.code);
         }
