@@ -58,7 +58,7 @@ router.put('/api/updateHomeSession/:id', passport.authenticate('jwt', { session:
     console.log('updating HomeSession: ' + req.body.name + ' ' + req.body.value);
     HomeSessionModel.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { name: req.body.name } },
+        { $set: { done: req.body.done, date: req.body.date, title: req.body.title } },
         { upsert: true },
         function (err, newHomeSession) {
             if (err) {
