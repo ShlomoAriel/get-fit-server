@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var sessionSchema = new Schema({
-    title: { type: String},
+    text: { type: String},
     date: { type: Date, required: true},
     start: { type: Date, required: true},
     end: { type: Date, required: true},

@@ -59,7 +59,7 @@ router.put('/api/upsertSession/', passport.authenticate('jwt', { session: false 
     } else{
         SessionModel.findOneAndUpdate(
             { _id: id},
-            { $set: { text: req.body.text, date: req.body.date, start: req.body.start, end: req.body.end, title: req.body.title} },
+            { $set: { text: req.body.text, date: req.body.date, start: req.body.start, end: req.body.end, text: req.body.text} },
             { upsert: true },
             function (err, newSession) {
                 if (err) {
