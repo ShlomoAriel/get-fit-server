@@ -49,6 +49,7 @@ router.put('/api/upsertSession/', passport.authenticate('jwt', { session: false 
     console.log('upserting Session: ' + req.body.name + ' ' + req.body.value);
     let id = req.body._id
     if (!id) {
+        var session = new SessionModel(req.body);
         session.save((err, newItem) => {
         if (err) {
             return next(err.code);
