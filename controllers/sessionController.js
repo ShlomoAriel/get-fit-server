@@ -47,9 +47,12 @@ router.post('/api/addSession', passport.authenticate('jwt', { session: false }),
 //----------------------------------------------------------------------------------------------------
 router.put('/api/upsertSession/', passport.authenticate('jwt', { session: false }), function (req, res) {
     console.log('upserting Session: ' + req.body.name + ' ' + req.body.value);
+    if (!req.body._id) {
+        req.body._id = new mongoose.mongo.ObjectID();
+    }
     SessionModel.findOneAndUpdate(
         { _id: req.body._id},
-        { $set: { text: req.body.text, date: req.body.date, start: req.body.start, end: req.body.end} },
+        { $set: { text: req.body.text, date: req.body.date, start: req.body.start, end: req.body.end, _id: req.body._id, , trainee: req.body.trainee} },
         { upsert: true },
         function (err, newSession) {
             if (err) {
