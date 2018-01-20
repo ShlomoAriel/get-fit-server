@@ -47,21 +47,30 @@ router.post('/api/addSession', passport.authenticate('jwt', { session: false }),
 //----------------------------------------------------------------------------------------------------
 router.put('/api/upsertSession/', passport.authenticate('jwt', { session: false }), function (req, res) {
     console.log('upserting Session: ' + req.body.name + ' ' + req.body.value);
-    if (!req.body._id) {
-        req.body._id = new mongoose.mongo.ObjectID();
+    let id = req.body._id
+    if (!id) {
+        session.save((err, newItem) => {
+        if (err) {
+            return next(err.code);
+        }
+        res.status(200).send('OK');
+    });
+    } else{
+        SessionModel.findOneAndUpdate(
+            { _id: id},
+            { $set: { text: req.body.text, date: req.body.date, start: req.body.start, end: req.body.end, title: req.body.title} },
+            { upsert: true },
+            function (err, newSession) {
+                if (err) {
+                    res.send('Error upserting Session\n' + err);
+                }
+                else {
+                    res.send(204);
+                }
+            });
     }
-    SessionModel.findOneAndUpdate(
-        { _id: req.body._id},
-        { $set: { text: req.body.text, date: req.body.date, start: req.body.start, end: req.body.end, _id: req.body._id, trainee: req.body.trainee} },
-        { upsert: true },
-        function (err, newSession) {
-            if (err) {
-                res.send('Error upserting Session\n' + err);
-            }
-            else {
-                res.send(204);
-            }
-        });
+
+        
 });
 //----------------------------------------------------------------------------------------------------
 router.put('/api/updateSession/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
