@@ -70,8 +70,6 @@ router.put('/api/upsertSession/', passport.authenticate('jwt', { session: false 
                 }
             });
     }
-
-        
 });
 //----------------------------------------------------------------------------------------------------
 router.put('/api/updateSession/:id', passport.authenticate('jwt', { session: false }), function (req, res) {

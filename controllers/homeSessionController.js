@@ -22,6 +22,33 @@ router.get('/api/getHomeSessionByTrainee/:id', (req, res) => {
         });
 })
 //----------------------------------------------------------------------------------------------------
+router.put('/api/upsertHomeSession/', passport.authenticate('jwt', { session: false }), function (req, res) {
+    console.log('upserting HomeSession: ' + req.body.name + ' ' + req.body.value);
+    let id = req.body._id
+    if (!id) {
+        var homeSession = new HomeSessionModel(req.body);
+        homeSession.save((err, newItem) => {
+        if (err) {
+            return next(err.code);
+        }
+        res.status(200).send('OK');
+    });
+    } else{
+        HomeSessionModel.findOneAndUpdate(
+            { _id: id},
+            { $set: { text: req.body.text, date: req.body.date, done: req.body.done} },
+            { upsert: true },
+            function (err, newHomeSession) {
+                if (err) {
+                    res.send('Error upserting HomeSession\n' + err);
+                }
+                else {
+                    res.send(204);
+                }
+            });
+    }
+});
+//----------------------------------------------------------------------------------------------------
 router.get('/api/getHomeSessions', passport.authenticate('jwt', { session: false }), function (req, res) {
     HomeSessionModel.find().populate('type').exec(function (err, homeSessions) {
         if (err) {
