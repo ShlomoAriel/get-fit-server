@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var homeSessionSchema = new Schema({
     text: { type: String},
     date: { type: Date, required: true},
-    sessionName:{ type: Schema.ObjectId, ref: 'SessionName', required: false },
+    sessionName:{ type: Schema.ObjectId, ref: 'SessionName', required: true },
     trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true },
     done: { type: Boolean },
 });
