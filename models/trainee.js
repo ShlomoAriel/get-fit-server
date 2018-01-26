@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var traineeSchema = new Schema({
-    IdentityNumber: { type: String, required: true, unique: false },
+    identityNumber: { type: String, required: true, unique: false },
     firstName: { type: String, required: true, unique: false },
     lastName: { type: String, required: true, unique: false },
     address: { type: String, required: false, unique: false },
