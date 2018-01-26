@@ -10,6 +10,8 @@ var traineeStatusSchema = new Schema({
     assCirc: { type: Number, required: false, unique: false },
     shoulderCirc: { type: Number, required: false, unique: false },
     waistCirc: { type: Number, required: false, unique: false },
+    shirtSize: { type: Number, required: false, unique: false },
+    pantsSize: { type: Number, required: false, unique: false },
     image: { type: String, required: false, unique: false },
     date: { type: Date, required: true},
     trainee:{ type: Schema.ObjectId, ref: 'Trainee', required: true },

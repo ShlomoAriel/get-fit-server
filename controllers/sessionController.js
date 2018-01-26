@@ -12,7 +12,9 @@ require('../config/passport')(passport);
 router.get('/api/getSessionByTrainee/:id', (req, res) => {
     SessionModel.find(
         { trainee: req.params.id })
-        .populate('trainingPackage').populate('trainee')
+        .populate('trainingPackage')
+        .populate('trainee')
+        .populate('location')
         .exec(function (err, packageList) {
             if (err) {
                 res.send('Error updating Resource\n' + err);
@@ -24,7 +26,7 @@ router.get('/api/getSessionByTrainee/:id', (req, res) => {
 })
 //-------------------------------------------------------------------------------------------------
 router.get('/api/getSessions', passport.authenticate('jwt', { session: false }), function (req, res) {
-    SessionModel.find().exec(function (err, Sessions) {
+    SessionModel.find().populate('location').exec(function (err, Sessions) {
         if (err) {
             res.send('find no good' + err);
         }
