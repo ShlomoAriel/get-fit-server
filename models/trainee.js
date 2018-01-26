@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var traineeSchema = new Schema({
+    IdentityNumber: { type: String, required: true, unique: false },
     firstName: { type: String, required: true, unique: false },
     lastName: { type: String, required: true, unique: false },
     address: { type: String, required: false, unique: false },
@@ -11,6 +12,7 @@ var traineeSchema = new Schema({
     phone: { type: String, required: false, unique: false },
     medicalStatus: { type: String, required: false, unique: false },
     medicine: { type: String, required: false, unique: false },
+    comment: { type: String, required: true, unique: false },
     trainingStatusList: [{type: Schema.Types.ObjectId, ref: 'TrainingStatus'}],
     goalList: [{type: Schema.Types.ObjectId, ref: 'Goal'}],
     trainingSessionList: [{type: Schema.Types.ObjectId, ref: 'TrainingSession'}],
