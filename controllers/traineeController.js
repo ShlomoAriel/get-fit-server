@@ -44,7 +44,21 @@ router.put('/api/updateTrainee/:id', passport.authenticate('jwt', { session: fal
     console.log('updating Trainee: ' + req.body.name + ' ' + req.body.value);
     TraineeModel.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { name: req.body.name } },
+        { $set: { 
+            phone: req.body.phone,
+            identityNumber: req.body.identityNumber,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            address: req.body.address,
+            birthdate: req.body.birthdate,
+            facebook: req.body.facebook,
+            height: req.body.height,
+            medicalStatus: req.body.medicalStatus,
+            medicine: req.body.medicine,
+            comment: req.body.comment,
+            email: req.body.email
+        } 
+        },
         { upsert: true },
         function (err, newTrainee) {
             if (err) {
