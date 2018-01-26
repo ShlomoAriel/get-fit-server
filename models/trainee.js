@@ -9,6 +9,7 @@ var traineeSchema = new Schema({
     birthdate: { type: Date, required: false},
     facebook: { type: String, required: false, unique: false },
     height: { type: String, required: false, unique: false },
+    email: { type: String, required: false, unique: false },
     phone: { type: String, required: false, unique: false },
     medicalStatus: { type: String, required: false, unique: false },
     medicine: { type: String, required: false, unique: false },
