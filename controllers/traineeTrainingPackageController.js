@@ -12,7 +12,7 @@ require('../config/passport')(passport);
 router.get('/api/getTraineeTrainingPackageByTrainee/:id', (req, res) => {
     TraineeTrainingPackageModel.find(
         { trainee: req.params.id })
-        .populate('trainingPackage').populate('trainee')
+        .populate('trainee')
         .exec(function (err, packageList) {
             if (err) {
                 res.send('Error updating Resource\n' + err);
