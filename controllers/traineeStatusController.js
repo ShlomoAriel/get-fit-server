@@ -36,7 +36,15 @@ router.get('/api/getTraineeStatuss', passport.authenticate('jwt', { session: fal
 //-------------------------------------------------------------------------------------------------
 router.post('/api/addTraineeStatus', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding traineeStatus');
-    var traineeStatus = new TraineeStatusModel(req.body);
+
+    let body = req.body
+    const img = req.body.image;
+    const data = img['$ngfDataUrl']
+    const split = data.split(',')
+    const base64string = split[1]
+    const buffer = Buffer.from(base64string, 'base64')
+    body.image = buffer 
+    var traineeStatus = new TraineeStatusModel(body);
     traineeStatus.save((err, newItem) => {
         if (err) {
             return next(err);
