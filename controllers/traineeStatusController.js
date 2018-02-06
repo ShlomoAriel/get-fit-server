@@ -39,7 +39,7 @@ router.post('/api/addTraineeStatus', passport.authenticate('jwt', { session: fal
     var traineeStatus = new TraineeStatusModel(req.body);
     traineeStatus.save((err, newItem) => {
         if (err) {
-            return next(err.code);
+            return next(err);
         }
         res.status(200).send('OK');
     });
