@@ -39,8 +39,7 @@ router.post('/api/addTraineeStatus', passport.authenticate('jwt', { session: fal
 
     let body = req.body
     const img = req.body.image;
-    const data = img['$ngfDataUrl']
-    const split = data.split(',')
+    const split = img.split(',')
     const base64string = split[1]
     const buffer = Buffer.from(base64string, 'base64')
     body.image = buffer 
