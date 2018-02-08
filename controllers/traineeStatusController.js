@@ -43,6 +43,8 @@ router.post('/api/addTraineeStatus', passport.authenticate('jwt', { session: fal
     const base64string = split[1]
     const buffer = Buffer.from(base64string, 'base64')
     body.image = buffer 
+    console.log("body: " + body)
+    console.log("image: " + body.image)
     var traineeStatus = new TraineeStatusModel(body);
     traineeStatus.save((err, newItem) => {
         if (err) {
@@ -60,7 +62,7 @@ router.put('/api/updateTraineeStatus/:id', passport.authenticate('jwt', { sessio
         { upsert: true },
         function (err, newTraineeStatus) {
             if (err) {
-                res.send('Error updating TraineeStatus\n' + err);
+                return next(err.code);
             }
             else {
                 res.send(204);
