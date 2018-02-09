@@ -8,20 +8,6 @@ app.use(passport.initialize());
 require('../config/passport')(passport);
 
 
-//----------------------------------------------------------------------------------------------------
-router.get('/api/getGoalByTrainee/:id', (req, res) => {
-    GoalModel.find(
-        { trainee: req.params.id })
-        .populate('trainingPackage').populate('trainee')
-        .exec(function (err, packageList) {
-            if (err) {
-                res.send('Error updating Resource\n' + err);
-            }
-            else {
-                res.send(packageList);
-            }
-        });
-})
 //-------------------------------------------------------------------------------------------------
 router.get('/api/getGoals', passport.authenticate('jwt', { session: false }), function (req, res) {
     GoalModel.find().exec(function (err, Goals) {
