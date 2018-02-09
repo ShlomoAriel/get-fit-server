@@ -37,17 +37,17 @@ router.post('/api/addTraineeGoal', passport.authenticate('jwt', { session: false
 router.post('/api/addTraineeGoals', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding traineeGoal')
 
-    function traineeGoalObject(goalId) { 
+    function traineeGoalObject(goaltext) { 
         return {
             achieved:req.body.achieved,
             trainee:req.body.trainee,
             date:req.body.date,
-            goal:goalId,
+            text:goaltext,
         }
     }
 
-    let goals = req.body.values.split(',').reduce( (traineeGoals, goalId) =>{
-        traineeGoals.push(traineeGoalObject(goalId))
+    let goals = req.body.values.split(',').reduce( (traineeGoals, goaltext) =>{
+        traineeGoals.push(traineeGoalObject(goaltext))
         return traineeGoals
     }, [])
 
