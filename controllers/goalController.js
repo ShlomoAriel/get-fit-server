@@ -35,7 +35,7 @@ router.put('/api/updateGoal/:id', passport.authenticate('jwt', { session: false 
     console.log('updating Goal: ' + req.body.name + ' ' + req.body.value);
     GoalModel.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { text: req.body.text, date: req.body.date, achieved: req.body.achieved} },
+        { $set: { name: req.body.name, date: req.body.date, achieved: req.body.achieved} },
         { upsert: true },
         function (err, newGoal) {
             if (err) {
