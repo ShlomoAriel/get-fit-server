@@ -1,5 +1,6 @@
 var express = require('express')
   , router = express.Router()
+  , UserModel = require('../models/user')
   , passport = require('passport')
   , TraineeModel = require('../models/trainee')
   , app = express()
@@ -32,12 +33,29 @@ router.get('/api/getTrainees', passport.authenticate('jwt', { session: false }),
 router.post('/api/addTrainee', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     console.log('adding trainee');
     var trainee = new TraineeModel(req.body);
-    trainee.save((err, newItem) => {
-        if (err) {
-            return next(err.code);
-        }
-        res.status(200).send('OK');
-    });
+    resultObject = {}
+    if (!req.body.email || !req.body.password || !req.body.role) {
+        res.json({ success: false, msg: 'Please pass email and password.' });
+    } else {
+        var newUser = new UserModel({
+            email: req.body.email.toLowerCase(),
+            name: req.body.firstName + ' ' + req.body.lastName,
+            role: req.body.role,
+            password: req.body.password
+        });
+        // save the user
+        newUser.save(function (err) {
+            if (err) {
+                return res.json({ success: false, msg: 'Username already exists. ' + err });
+            }
+            trainee.save((err, newItem) => {
+                if (err) {
+                    return next(err.code);
+                }
+                res.status(200).send('OK');
+            });
+        });
+    }
 });
 //----------------------------------------------------------------------------------------------------
 router.put('/api/updateTrainee/:id', passport.authenticate('jwt', { session: false }), function (req, res) {

@@ -6,13 +6,10 @@ var express = require('express')
 
 app.use(passport.initialize())
 require('../config/passport')(passport)
-
-
 //----------------------------------------------------------------------------------------------------
 router.get('/api/getTraineeGoals/:id', (req, res) => {
     TraineeGoalModel.find(
         { trainee: req.params.id })
-        .populate('trainee').populate('goal')
         .exec(function (err, goalList) {
             if (err) {
                 res.send('Error updating Resource\n' + err)
@@ -38,12 +35,12 @@ router.post('/api/addTraineeGoals', passport.authenticate('jwt', { session: fals
     console.log('adding traineeGoal')
 
     function traineeGoalObject(goalname) { 
-        return {
+        return new TraineeGoalModel({
             achieved:req.body.achieved,
-            trainee:req.body.trainee,
+            trainee: req.body.trainee,
             date:req.body.date,
             name:goalname,
-        }
+        })
     }
 
     let goals = req.body.values.split(',').reduce( (traineeGoals, goalname) =>{
@@ -52,13 +49,13 @@ router.post('/api/addTraineeGoals', passport.authenticate('jwt', { session: fals
     }, [])
 
     console.log(goals)
-    var traineeGoal = new TraineeGoalModel(req.body)
-    traineeGoal.save((err, newItem) => {
+    TraineeGoalModel.collection.insert(goals,(err, newItem) => {
         if (err) {
+            console.log(err)
             return next(err.code)
         }
         res.status(200).send('OK')
-    })
+    });
 })
 //----------------------------------------------------------------------------------------------------
 router.put('/api/updateTraineeGoal/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
