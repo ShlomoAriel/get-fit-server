@@ -27,7 +27,7 @@ var traineeSchema = new Schema({
     goalList: [{type: Schema.Types.ObjectId, ref: 'Goal'}],
     trainingSessionList: [{type: Schema.Types.ObjectId, ref: 'TrainingSession'}],
     trainerRecommendationList: [{type: Schema.Types.ObjectId, ref: 'TrainerRecommendation'}],
-    user: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    user: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 traineeSchema.pre('remove', function(next) {
     // 'this' is the client being removed. Provide callbacks here if you want

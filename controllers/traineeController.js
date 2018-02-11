@@ -44,10 +44,12 @@ router.post('/api/addTrainee', passport.authenticate('jwt', { session: false }),
             password: req.body.password
         });
         // save the user
-        newUser.save(function (err) {
+        newUser.save(function (err, createdUser) {
             if (err) {
                 return res.json({ success: false, msg: 'Username already exists. ' + err });
             }
+            console.log('createdUser: ' + createdUser)
+            trainee.user = createdUser._id;
             trainee.save((err, newItem) => {
                 if (err) {
                     return next(err.code);
