@@ -113,3 +113,4 @@ typings/
 ### Sass template
 .sass-cache/
 *.css.map
+launch.json

@@ -1,22 +1,41 @@
 var express = require('express')
   , router = express.Router()
   , UserModel = require('../models/user')
-  , passport = require('passport')
+  , DietModel = require('../models/diet')
+  , TrainingSessionModel = require('../models/trainingSession')
+  , TraineeTrainingPackageModel = require('../models/traineeTrainingPackage')
+  , TraineeStatusModel = require('../models/traineeStatus')
+  , TraineeGoalModel = require('../models/traineeGoal')
+  , SessionModel = require('../models/session')
+  , ScheduledExerciseModel = require('../models/scheduledExercise')
+  , PaymentModel = require('../models/payment')
+  , HomeSessionModel = require('../models/homeSession')
   , TraineeModel = require('../models/trainee')
+  , passport = require('passport')
   , app = express()
 
+var traineeUtils = require('../utils/traineeUtils')
 app.use(passport.initialize());
 require('../config/passport')(passport);
 
 router.get('/api/getTrainee/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    TraineeModel.find({_id:req.params.id}).exec(function (err, trainee) {
+    let getTraineeInfo =  (err, result) => {
+        if(result.err){
+            console.log('trainee info error: ' + result.err)
+            res.send('find no good' + result.err);
+        } else{
+            console.log('trainee info: ' + result)
+            res.json(result);
+        }
+    }
+    TraineeModel.findOne({_id:req.params.id}).exec(function (err, trainee) {
         if (err) {
-            res.send('find no good' + err);
+            res.send('find no good' + err)
         }
         else {
-            res.json(trainee);
+            traineeUtils.getTraineeInfo(trainee,getTraineeInfo)
         }
-    })
+    })    
 });
 //-------------------------------------------------------------------------------------------------
 router.get('/api/getTrainees', passport.authenticate('jwt', { session: false }), function (req, res) {
@@ -80,25 +99,29 @@ router.put('/api/updateTrainee/:id', passport.authenticate('jwt', { session: fal
         } 
         },
         { upsert: true },
-        function (err, newTrainee) {
+        function (err, trainee) {
             if (err) {
                 res.send('Error updating Trainee\n' + err);
             }
             else {
-                res.send(204);
+                res.json(trainee)
             }
         });
 });
 //----------------------------------------------------------------------------------------------------
 router.delete('/api/deleteTrainee/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    TraineeModel.findOneAndRemove(
-        { _id: req.params.id },
-        function (err, newTrainee) {
+    TraineeModel.findById(req.params.id, function (err, newTrainee) {
             if (err) {
                 res.send('Error deleting Trainee\n' + err);
             }
             else {
-                res.send(204);
+                trainee.remove( (err, response) =>{
+                    if (err) {
+                        res.send('Error deleting trainee\n' + err);
+                    } else{
+                        res.json(response)
+                    }
+                } )
             }
         });
 });

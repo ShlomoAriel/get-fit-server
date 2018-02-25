@@ -2,13 +2,25 @@ var express = require('express')
   , router = express.Router()
   , passport = require('passport')
   , UserModel = require('../models/user')
+  , DietModel = require('../models/diet')
+  , TrainingSessionModel = require('../models/trainingSession')
+  , TraineeTrainingPackageModel = require('../models/traineeTrainingPackage')
+  , TraineeStatusModel = require('../models/traineeStatus')
+  , TraineeGoalModel = require('../models/traineeGoal')
+  , SessionModel = require('../models/session')
+  , SessionNameModel = require('../models/sessionName')
+  , ScheduledExerciseModel = require('../models/scheduledExercise')
+  , PaymentModel = require('../models/payment')
+  , HomeSessionModel = require('../models/homeSession')
+  , TraineeModel = require('../models/trainee')
   , app = express()
   , config = require('../config/database')
   , TraineeModel = require('../models/trainee')
   , jwt = require('jwt-simple')
-
+var async = require("async")
 app.use(passport.initialize())
 require('../config/passport')(passport)
+var traineeUtils = require('../utils/traineeUtils')
 
 //================================USERS=====================================================================
 // create a new user account (POST http://localhost:8080/api/signup)
@@ -48,20 +60,30 @@ router.post('/api/authenticate', function (req, res) {
         if (!user) {
             res.send({ success: false, msg: 'Authentication failed. User not found.' })
         } else {
-            // check if password matches
             user.comparePassword(req.body.password, function (err, isMatch) {
                 if (isMatch && !err) {
                     console.log('err: ' + err + ' isMatch: ' + isMatch)
                     // if user is found and password is right create a token
                     var token = jwt.encode(user, config.secret)
+                    let getTraineeInfo =  (err, result) => {
+                        if(result.err){
+                            console.log('trainee info error: ' + result.err)
+                            res.send('find no good' + result.err);
+                        } else{
+                            console.log('trainee info: ' + result)
+                            result.user = user
+                            result.token = 'JWT ' + token
+                            res.json(result);
+                        }
+                    }
                     if(user.role._id == '57d27d4313d468481b1fe12e'){
                         // res.json({ success: true, token: 'JWT ' + token, user: user})
                         TraineeModel.findOne().exec(function (err, trainee) {
                             if (err) {
-                                res.send('find no good' + err)
+                                res.send('find no good' + err);
                             }
                             else {
-                                res.json({ success: true, token: 'JWT ' + token, user: user , trainee: trainee})
+                                traineeUtils.getTraineeInfo(trainee,getTraineeInfo)
                             }
                         })
                     } 
@@ -71,7 +93,8 @@ router.post('/api/authenticate', function (req, res) {
                                 res.send('find no good' + err)
                             }
                             else {
-                                res.json({ success: true, token: 'JWT ' + token, user: user , trainee: trainee})
+                                traineeUtils.getTraineeInfo(trainee,getTraineeInfo)
+                                // res.json({ success: true, token: 'JWT ' + token, user: user , trainee: trainee})
                             }
                         })
                     }

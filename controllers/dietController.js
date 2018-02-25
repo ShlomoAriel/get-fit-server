@@ -41,7 +41,7 @@ router.post('/api/addDiet', passport.authenticate('jwt', { session: false }), (r
         if (err) {
             return next(err.code);
         }
-        res.status(200).send('OK');
+        res.json(newItem);
     });
 });
 //----------------------------------------------------------------------------------------------------

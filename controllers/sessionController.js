@@ -26,7 +26,7 @@ router.get('/api/getSessionByTrainee/:id', (req, res) => {
 })
 //-------------------------------------------------------------------------------------------------
 router.get('/api/getSessions', passport.authenticate('jwt', { session: false }), function (req, res) {
-    SessionModel.find().populate('location').exec(function (err, Sessions) {
+    SessionModel.find().populate('location').populate('trainee').exec(function (err, Sessions) {
         if (err) {
             res.send('find no good' + err);
         }
@@ -43,7 +43,7 @@ router.post('/api/addSession', passport.authenticate('jwt', { session: false }),
         if (err) {
             return next(err.code);
         }
-        res.status(200).send('OK');
+        res.status(newItem);
     });
 });
 //----------------------------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ router.put('/api/upsertSession/', passport.authenticate('jwt', { session: false 
         if (err) {
             return next(err.code);
         }
-        res.status(200).send('OK');
+        res.json(newItem);
     });
     } else{
         SessionModel.findOneAndUpdate(
@@ -68,7 +68,7 @@ router.put('/api/upsertSession/', passport.authenticate('jwt', { session: false 
                     res.send('Error upserting Session\n' + err);
                 }
                 else {
-                    res.send(204);
+                    res.json(newSession);
                 }
             });
     }

@@ -73,7 +73,7 @@ router.post('/api/addScheduledExercise', passport.authenticate('jwt', { session:
             console.log('scheduledExercise saving error ' + err);
             return next(err.code);
         }
-        res.status(200).send('OK');
+        res.json(newItem);
     });
 });
 //----------------------------------------------------------------------------------------------------

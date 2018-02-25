@@ -49,12 +49,12 @@ router.post('/api/addTraineeGoals', passport.authenticate('jwt', { session: fals
     }, [])
 
     console.log(goals)
-    TraineeGoalModel.collection.insert(goals,(err, newItem) => {
+    TraineeGoalModel.insertMany(goals,(err, newItems) => {
         if (err) {
             console.log(err)
             return next(err.code)
         }
-        res.status(200).send('OK')
+        res.json(newItems)
     });
 })
 //----------------------------------------------------------------------------------------------------

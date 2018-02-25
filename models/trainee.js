@@ -9,6 +9,7 @@ var DietModel = require('../models/diet')
   , ScheduledExerciseModel = require('../models/scheduledExercise')
   , PaymentModel = require('../models/payment')
   , HomeSessionModel = require('../models/homeSession')
+  , UserModel = require('../models/user')
 
 var traineeSchema = new Schema({
     identityNumber: { type: String, required: false, unique: false },
@@ -23,10 +24,6 @@ var traineeSchema = new Schema({
     medicalStatus: { type: String, required: false, unique: false },
     medicine: { type: String, required: false, unique: false },
     comment: { type: String, required: false, unique: false },
-    trainingStatusList: [{type: Schema.Types.ObjectId, ref: 'TrainingStatus'}],
-    goalList: [{type: Schema.Types.ObjectId, ref: 'Goal'}],
-    trainingSessionList: [{type: Schema.Types.ObjectId, ref: 'TrainingSession'}],
-    trainerRecommendationList: [{type: Schema.Types.ObjectId, ref: 'TrainerRecommendation'}],
     user: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 traineeSchema.pre('remove', function(next) {
@@ -41,6 +38,7 @@ traineeSchema.pre('remove', function(next) {
     ScheduledExerciseModel.remove({trainee: this._id}).exec();
     PaymentModel.remove({trainee: this._id}).exec();
     HomeSessionModel.remove({trainee: this._id}).exec();
+    UserModel.remove({trainee: this._id}).exec();
     next();
 });
 var Trainee = mongoose.model('Trainee', traineeSchema);

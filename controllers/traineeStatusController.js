@@ -38,19 +38,19 @@ router.post('/api/addTraineeStatus', passport.authenticate('jwt', { session: fal
     console.log('adding traineeStatus');
 
     let body = req.body
-    const img = req.body.image;
-    const split = img.split(',')
-    const base64string = split[1]
-    const buffer = Buffer.from(base64string, 'base64')
-    body.image = buffer 
+    // const img = req.body.image;
+    // const split = img.split(',')
+    // const base64string = split[1]
+    // const buffer = Buffer.from(base64string, 'base64')
+    // body.image = buffer 
     console.log("body: " + body)
-    console.log("image: " + body.image)
+    // console.log("image: " + body.image)
     var traineeStatus = new TraineeStatusModel(body);
     traineeStatus.save((err, newItem) => {
         if (err) {
             return next(err);
         }
-        res.status(200).send('OK');
+        res.json(newItem);
     });
 });
 //----------------------------------------------------------------------------------------------------

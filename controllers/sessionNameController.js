@@ -38,7 +38,7 @@ router.post('/api/addSessionName', passport.authenticate('jwt', { session: false
         if (err) {
             return next(err.code);
         }
-        res.status(200).send('OK');
+        res.json(newItem);
     });
 });
 //----------------------------------------------------------------------------------------------------
@@ -59,14 +59,18 @@ router.put('/api/updateSessionName/:id', passport.authenticate('jwt', { session:
 });
 //----------------------------------------------------------------------------------------------------
 router.delete('/api/deleteSessionName/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-    SessionNameModel.findOneAndRemove(
-        { _id: req.params.id },
-        function (err, newSessionName) {
+    SessionNameModel.findById(req.params.id, function (err, sessionName) {
             if (err) {
-                res.send('Error deleting SessionName\n' + err);
+                res.send('Error finding for delete SessionName\n' + err);
             }
             else {
-                res.send(204);
+                sessionName.remove( (err, response) =>{
+                    if (err) {
+                        res.send('Error deleting SessionName\n' + err);
+                    } else{
+                        res.json(response)
+                    }
+                } )
             }
         });
 });
